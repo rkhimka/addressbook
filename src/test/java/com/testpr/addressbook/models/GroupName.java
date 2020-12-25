@@ -1,4 +1,4 @@
-package com.testpr.addressbook;
+package com.testpr.addressbook.models;
 
 public class GroupName {
     private final String groupName;
