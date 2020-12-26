@@ -22,6 +22,10 @@ public class GroupsHelper extends BaseHelper {
         click(By.xpath(".//input[@value=\"Enter information\"]"));
     }
 
+    public void submitGroupEdition() {
+        click(By.xpath(".//input[@value=\"Update\"]"));
+    }
+
     public void setGroupData(GroupData groupData) {
         type(By.xpath(".//input[@name=\"group_name\"]"), groupData.getGroupName());
         type(By.xpath(".//textarea[@name=\"group_header\"]"), groupData.getHeaderName());
@@ -30,6 +34,10 @@ public class GroupsHelper extends BaseHelper {
 
     public void initGroupCreation() {
         click(By.xpath(".//input[@value=\"New group\"][1]"));
+    }
+
+    public void initGroupEditing() {
+        click(By.xpath(".//input[@value=\"Edit group\"][1]"));
     }
 
 }
