@@ -6,9 +6,9 @@ public class RemoveGroupTest extends TestBase {
 
     @Test
     public void testAddGroup() {
-        app.followGroups();
-        app.selectFirstGroup();
-        app.submitGroupDeletion();
+        app.getNavigation().followGroups();
+        app.getGroupsHelper().selectFirstGroup();
+        app.getGroupsHelper().submitGroupDeletion();
 
     }
 }
