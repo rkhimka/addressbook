@@ -12,14 +12,15 @@ public class ApplicationHelper {
     private SessionHelper session;
     private NavigationHelper navigation;
     private GroupsHelper groupsHelper;
+    private ContactsHelper contactsHelper;
     private String browser;
 
     public ApplicationHelper(String browser) {
         this.browser = browser;
     }
 
-    public SessionHelper getSession() {
-        return session;
+    public ContactsHelper getContactsHelper() {
+        return contactsHelper;
     }
 
     public NavigationHelper getNavigation() {
@@ -42,6 +43,7 @@ public class ApplicationHelper {
         session = new SessionHelper(wd);
         navigation = new NavigationHelper(wd);
         groupsHelper = new GroupsHelper(wd);
+        contactsHelper = new ContactsHelper(wd);
         openAddressbook();
         session.login("admin", "secret");
     }
