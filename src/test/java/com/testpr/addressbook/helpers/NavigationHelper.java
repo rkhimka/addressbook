@@ -3,14 +3,13 @@ package com.testpr.addressbook.helpers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class NavigationHelper {
-    private ChromeDriver wd;
+public class NavigationHelper extends BaseHelper {
 
     public NavigationHelper(ChromeDriver wd) {
-        this.wd = wd;
+        super(wd);
     }
 
     public void followGroups() {
-        wd.findElement(By.xpath(".//a[text()='groups']")).click();
+        click(By.xpath(".//a[text()='groups']"));
     }
 }

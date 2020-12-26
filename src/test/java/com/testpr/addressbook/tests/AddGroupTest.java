@@ -1,6 +1,6 @@
 package com.testpr.addressbook.tests;
 
-import com.testpr.addressbook.models.Groups;
+import com.testpr.addressbook.models.GroupData;
 import org.testng.annotations.Test;
 
 public class AddGroupTest extends TestBase {
@@ -9,7 +9,7 @@ public class AddGroupTest extends TestBase {
     public void testAddGroup() {
         app.getNavigation().followGroups();
         app.getGroupsHelper().initGroupCreation();
-        app.getGroupsHelper().setGroupData(new Groups("test group", "test header", "test comment"));
+        app.getGroupsHelper().setGroupData(new GroupData("test group", "test header", "test comment"));
         app.getGroupsHelper().submitGroupCreation();
     }
 }
