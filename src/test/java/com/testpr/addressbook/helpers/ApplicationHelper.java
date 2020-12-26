@@ -32,9 +32,9 @@ public class ApplicationHelper {
 
     public void init() {
         //System.setProperty("webdriver.chrome.driver", "D:\\JAVA PROJECTS\\addressbook\\chromedriver.exe");
-        if (browser == BrowserType.CHROME) {
+        if (browser.equals(BrowserType.CHROME)) {
             wd = new ChromeDriver();
-        } else if (browser == BrowserType.FIREFOX) {
+        } else if (browser.equals(BrowserType.FIREFOX)) {
             wd = new FirefoxDriver();
         }
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
