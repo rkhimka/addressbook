@@ -2,28 +2,16 @@ package com.testpr.addressbook.helpers;
 
 import com.testpr.addressbook.models.GroupData;
 import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebDriver;
 
 public class GroupsHelper extends BaseHelper {
 
-    public GroupsHelper(ChromeDriver wd) {
+    public GroupsHelper(WebDriver wd) {
         super(wd);
-    }
-
-    public void submitGroupDeletion() {
-        click(By.xpath(".//input[@value=\"Delete group(s)\"][1]"));
     }
 
     public void selectFirstGroup() {
         click(By.xpath(".//input[@type=\"checkbox\"][1]"));
-    }
-
-    public void submitGroupCreation() {
-        click(By.xpath(".//input[@value=\"Enter information\"]"));
-    }
-
-    public void submitGroupEdition() {
-        click(By.xpath(".//input[@value=\"Update\"]"));
     }
 
     public void setGroupData(GroupData groupData) {
@@ -32,8 +20,23 @@ public class GroupsHelper extends BaseHelper {
         type(By.xpath(".//textarea[@name=\"group_footer\"]"), groupData.getComment());
     }
 
+    //CREATE GROUP METHODS
+    public void submitGroupCreation() {
+        click(By.xpath(".//input[@value=\"Enter information\"]"));
+    }
+
     public void initGroupCreation() {
         click(By.xpath(".//input[@value=\"New group\"][1]"));
+    }
+
+    // DELETE GROUP METHODS
+    public void submitGroupDeletion() {
+        click(By.xpath(".//input[@value=\"Delete group(s)\"][1]"));
+    }
+
+    //EDITING GROUP METHODS
+    public void submitGroupEdition() {
+        click(By.xpath(".//input[@value=\"Update\"]"));
     }
 
     public void initGroupEditing() {

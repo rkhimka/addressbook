@@ -1,12 +1,12 @@
 package com.testpr.addressbook.helpers;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebDriver;
 
 public class BaseHelper {
-    protected ChromeDriver wd;
+    protected WebDriver wd;
 
-    public BaseHelper(ChromeDriver wd) {
+    public BaseHelper(WebDriver wd) {
         this.wd = wd;
     }
 
