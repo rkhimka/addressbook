@@ -6,9 +6,13 @@ import org.testng.annotations.Test;
 public class EditGroupTest extends TestBase {
 
     @Test
-    public void testEditGroupData() {
+    public void testEditGroup() {
         app.getNavigation().followGroups();
-        app.getGroupsHelper().selectFirstGroup();
+        if (! app.getGroupsHelper().isTestGroupCreated("test group")) {
+            app.getGroupsHelper().createGroup(new GroupData("test group", "test header", "test comment"));
+        }
+        app.getNavigation().followGroups();
+        app.getGroupsHelper().selectGroupByName("test group");
         app.getGroupsHelper().initGroupEditing();
         app.getGroupsHelper().setGroupData(new GroupData("new group name",
                 "new header", "new comment message"));
