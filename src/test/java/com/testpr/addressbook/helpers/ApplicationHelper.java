@@ -38,7 +38,7 @@ public class ApplicationHelper {
         } else if (browser.equals(BrowserType.FIREFOX)) {
             wd = new FirefoxDriver();
         }
-        wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         wd.manage().window().maximize();
         session = new SessionHelper(wd);
         navigation = new NavigationHelper(wd);

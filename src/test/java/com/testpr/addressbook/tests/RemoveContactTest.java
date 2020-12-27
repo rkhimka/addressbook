@@ -10,6 +10,5 @@ public class RemoveContactTest extends TestBase {
         app.getContactsHelper().selectContactByName("Roma", "Test");
         app.getContactsHelper().submitContactDeletion();
         app.getContactsHelper().submitDeletionAlert();
-        app.getNavigation().followHome();
     }
 }

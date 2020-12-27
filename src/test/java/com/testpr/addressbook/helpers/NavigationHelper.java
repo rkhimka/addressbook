@@ -10,10 +10,17 @@ public class NavigationHelper extends BaseHelper {
     }
 
     public void followGroups() {
+        if (isElementPresent(By.tagName("h1")) && wd.findElement(By.tagName("h1")).getText().equals("Groups")
+                && isElementPresent(By.xpath(".//input[@value='New group']"))) {
+            return;
+        }
         click(By.xpath(".//a[text()='groups']"));
     }
 
     public void followHome() {
+        if (isElementPresent(By.id("maintable"))) {
+            return;
+        }
         click(By.xpath(".//a[text()='home']"));
     }
 
