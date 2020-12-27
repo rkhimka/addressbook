@@ -12,6 +12,10 @@ public class ContactsHelper extends BaseHelper {
         super(wd);
     }
 
+    public void followContactCreation() {
+        click(By.xpath(".//a[text()='add new']"));
+    }
+
     public void setContactData(ContactData contactData, boolean isCreation) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("lastname"), contactData.getLastName());
@@ -27,13 +31,19 @@ public class ContactsHelper extends BaseHelper {
     }
 
     public void selectContactByName(String firstName, String lastName) {
-        String locator = String.format(".//input[@title=\"Select (%s %s)\"]", firstName, lastName);
+        String locator = String.format(".//input[@title='Select (%s %s)']", firstName, lastName);
         click(By.xpath(locator));
     }
 
     //CREATION METHODS
     public void submitContactCreation() {
         click(By.xpath(".//input[@value='Enter'][1]"));
+    }
+
+    public void createContact(ContactData contactData, boolean isCreation) {
+        followContactCreation();
+        setContactData(contactData, isCreation);
+        submitContactCreation();
     }
 
     //EDITING METHODS
@@ -52,5 +62,11 @@ public class ContactsHelper extends BaseHelper {
 
     public void submitDeletionAlert() {
         acceptAlert();
+    }
+
+    //CHECK METHODS
+    public boolean isContactCreated(String firstName, String lastName) {
+        String locator = String.format(".//input[@title='Select (%s %s)']", firstName, lastName);
+        return isElementPresent(By.xpath(locator));
     }
 }

@@ -23,8 +23,4 @@ public class NavigationHelper extends BaseHelper {
         }
         click(By.xpath(".//a[text()='home']"));
     }
-
-    public void followContactCreation() {
-        click(By.xpath(".//a[text()='add new']"));
-    }
 }
