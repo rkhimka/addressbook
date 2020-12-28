@@ -19,9 +19,10 @@ public class AddGroupTest extends TestBase {
         app.getNavigation().followGroups();
         List<GroupData> after = app.getGroupsHelper().getGroupsList();
         Assert.assertEquals(after.size(), before.size() + 1);
-        //set max ID for newly created group
-        group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
         before.add(group);
-        Assert.assertEquals(new HashSet<>(before), new HashSet<>(after));
+        Comparator<? super GroupData> byID = (o1, o2) -> Integer.compare(o1.getId(), o2.getId());
+        before.sort(byID);
+        after.sort(byID);
+        Assert.assertEquals(before, after);
     }
 }

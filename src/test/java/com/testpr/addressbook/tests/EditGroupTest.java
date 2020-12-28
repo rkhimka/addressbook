@@ -4,6 +4,7 @@ import com.testpr.addressbook.models.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -27,9 +28,12 @@ public class EditGroupTest extends TestBase {
         app.getNavigation().followGroups();
         List<GroupData> after = app.getGroupsHelper().getGroupsList();
         Assert.assertEquals(after.size(), before.size());
-
         before.remove(0);
         before.add(group);
-        Assert.assertEquals(new HashSet<>(before), new HashSet<>(after));
+        //sort two lists with groups
+        Comparator<? super GroupData> byID = (o1, o2) -> Integer.compare(o1.getId(), o2.getId());
+        before.sort(byID);
+        after.sort(byID);
+        Assert.assertEquals(before, after);
     }
 }

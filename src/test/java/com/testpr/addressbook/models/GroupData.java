@@ -9,7 +9,7 @@ public class GroupData {
     private final String comment;
 
     public GroupData(String groupName, String headerName, String comment) {
-        this.id = 0;
+        this.id = Integer.MAX_VALUE;
         this.groupName = groupName;
         this.headerName = headerName;
         this.comment = comment;
@@ -55,12 +55,11 @@ public class GroupData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupData groupData = (GroupData) o;
-        return id == groupData.id &&
-                Objects.equals(groupName, groupData.groupName);
+        return Objects.equals(groupName, groupData.groupName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, groupName);
+        return Objects.hash(groupName);
     }
 }

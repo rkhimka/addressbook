@@ -21,7 +21,6 @@ public class RemoveGroupTest extends TestBase {
         app.getNavigation().followGroups();
         List<GroupData> after = app.getGroupsHelper().getGroupsList();
         Assert.assertEquals(after.size(), before.size() - 1);
-
         before.remove(0);
         Assert.assertEquals(before, after);
     }
