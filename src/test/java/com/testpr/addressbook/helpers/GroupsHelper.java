@@ -10,6 +10,10 @@ public class GroupsHelper extends BaseHelper {
         super(wd);
     }
 
+    public int getGroupsCount() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
+
     public void selectGroupByName(String groupName) {
         String locator = String.format(".//input[@title='Select (%s)']", groupName);
         click(By.xpath(locator));
