@@ -3,6 +3,10 @@ package com.testpr.addressbook.helpers;
 import com.testpr.addressbook.models.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupsHelper extends BaseHelper {
 
@@ -19,8 +23,17 @@ public class GroupsHelper extends BaseHelper {
         click(By.xpath(locator));
     }
 
-    public void selectGroupByIndex(int index) {
+    public List<GroupData> getGroupsList(){
+        List<GroupData> groups = new ArrayList<GroupData>();
+        List<WebElement> elements = wd.findElements(By.name("selected[]"));
+        for (WebElement e: elements){
+            GroupData groupdata = new GroupData(e.getText(), null, null);
+            groups.add(groupdata);
+        }
+        return groups;
+    }
 
+    public void selectGroupByIndex(int index) {
         wd.findElements(By.name("selected[]")).get(index - 1).click();
     }
 

@@ -4,6 +4,8 @@ import com.testpr.addressbook.models.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class EditGroupTest extends TestBase {
 
     @Test
@@ -14,14 +16,14 @@ public class EditGroupTest extends TestBase {
                     "test header", "test comment"));
         }
         app.getNavigation().followGroups();
-        int countBeforeTest = app.getGroupsHelper().getGroupsCount();
+        List<GroupData> countBeforeTest = app.getGroupsHelper().getGroupsList();
         app.getGroupsHelper().selectGroupByIndex(1);
         app.getGroupsHelper().initGroupEditing();
         app.getGroupsHelper().setGroupData(new GroupData("new group name",
                 "new header", "new comment message"));
         app.getGroupsHelper().submitGroupEdition();
         app.getNavigation().followGroups();
-        int countAfterTest = app.getGroupsHelper().getGroupsCount();
-        Assert.assertEquals(countAfterTest, countBeforeTest);
+        List<GroupData> countAfterTest = app.getGroupsHelper().getGroupsList();
+        Assert.assertEquals(countAfterTest.size(), countBeforeTest.size());
     }
 }
