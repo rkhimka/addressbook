@@ -9,12 +9,13 @@ public class EditGroupTest extends TestBase {
     @Test
     public void testEditGroup() {
         app.getNavigation().followGroups();
-        if (! app.getGroupsHelper().isTestGroupCreated("test group")) {
-            app.getGroupsHelper().createGroup(new GroupData("test group", "test header", "test comment"));
+        if (! app.getGroupsHelper().isAnyGroupCreated()) {
+            app.getGroupsHelper().createGroup(new GroupData("test group",
+                    "test header", "test comment"));
         }
         app.getNavigation().followGroups();
         int countBeforeTest = app.getGroupsHelper().getGroupsCount();
-        app.getGroupsHelper().selectGroupByName("test group");
+        app.getGroupsHelper().selectGroupByIndex(1);
         app.getGroupsHelper().initGroupEditing();
         app.getGroupsHelper().setGroupData(new GroupData("new group name",
                 "new header", "new comment message"));

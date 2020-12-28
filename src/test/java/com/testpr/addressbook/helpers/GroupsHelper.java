@@ -19,6 +19,11 @@ public class GroupsHelper extends BaseHelper {
         click(By.xpath(locator));
     }
 
+    public void selectGroupByIndex(int index) {
+
+        wd.findElements(By.name("selected[]")).get(index - 1).click();
+    }
+
     public void setGroupData(GroupData groupData) {
         type(By.xpath(".//input[@name='group_name']"), groupData.getGroupName());
         type(By.xpath(".//textarea[@name='group_header']"), groupData.getHeaderName());
@@ -63,5 +68,9 @@ public class GroupsHelper extends BaseHelper {
     public boolean isTestGroupCreated(String groupName) {
         String locator = String.format(".//input[@title='Select (%s)']", groupName);
         return isElementPresent(By.xpath(locator));
+    }
+
+    public boolean isAnyGroupCreated() {
+        return isElementPresent(By.name("selected[]"));
     }
 }

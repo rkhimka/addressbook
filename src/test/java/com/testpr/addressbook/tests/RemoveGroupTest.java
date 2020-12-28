@@ -9,12 +9,12 @@ public class RemoveGroupTest extends TestBase {
     @Test
     public void testDeleteGroup() {
         app.getNavigation().followGroups();
-        if (! app.getGroupsHelper().isTestGroupCreated("test group")) {
+        if (! app.getGroupsHelper().isAnyGroupCreated()) {
             app.getGroupsHelper().createGroup(new GroupData("test group", "test header", "test comment"));
         }
         app.getNavigation().followGroups();
         int countBeforeTest = app.getGroupsHelper().getGroupsCount();
-        app.getGroupsHelper().selectGroupByName("test group");
+        app.getGroupsHelper().selectGroupByIndex(1);
         app.getGroupsHelper().submitGroupDeletion();
         app.getNavigation().followGroups();
         int countAfterTest = app.getGroupsHelper().getGroupsCount();
