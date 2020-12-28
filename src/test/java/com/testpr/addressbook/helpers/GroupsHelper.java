@@ -23,18 +23,20 @@ public class GroupsHelper extends BaseHelper {
         click(By.xpath(locator));
     }
 
-    public List<GroupData> getGroupsList(){
-        List<GroupData> groups = new ArrayList<GroupData>();
-        List<WebElement> elements = wd.findElements(By.name("selected[]"));
-        for (WebElement e: elements){
-            GroupData groupdata = new GroupData(e.getText(), null, null);
-            groups.add(groupdata);
-        }
-        return groups;
-    }
 
     public void selectGroupByIndex(int index) {
         wd.findElements(By.name("selected[]")).get(index - 1).click();
+    }
+
+    public List<GroupData> getGroupsList(){
+        List<GroupData> groups = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.xpath(".//span[@class='group']"));
+        for (WebElement e: elements){
+            int id = Integer.parseInt(e.findElement(By.tagName("input")).getAttribute("value"));
+            GroupData groupdata = new GroupData(id, e.getText(), null, null);
+            groups.add(groupdata);
+        }
+        return groups;
     }
 
     public void setGroupData(GroupData groupData) {

@@ -15,11 +15,14 @@ public class RemoveGroupTest extends TestBase {
             app.getGroupsHelper().createGroup(new GroupData("test group", "test header", "test comment"));
         }
         app.getNavigation().followGroups();
-        List<GroupData> countBeforeTest = app.getGroupsHelper().getGroupsList();
+        List<GroupData> before = app.getGroupsHelper().getGroupsList();
         app.getGroupsHelper().selectGroupByIndex(1);
         app.getGroupsHelper().submitGroupDeletion();
         app.getNavigation().followGroups();
-        List<GroupData> countAfterTest = app.getGroupsHelper().getGroupsList();
-        Assert.assertEquals(countAfterTest.size(), countBeforeTest.size() - 1);
+        List<GroupData> after = app.getGroupsHelper().getGroupsList();
+        Assert.assertEquals(after.size(), before.size() - 1);
+
+        before.remove(0);
+        Assert.assertEquals(before, after);
     }
 }
