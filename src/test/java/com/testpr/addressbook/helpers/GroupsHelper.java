@@ -5,8 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GroupsHelper extends BaseHelper {
 
@@ -14,17 +15,12 @@ public class GroupsHelper extends BaseHelper {
         super(wd);
     }
 
-    public void selectGroupByName(String groupName) {
-        String locator = String.format(".//input[@title='Select (%s)']", groupName);
-        click(By.xpath(locator));
+    public void selectGroupById(int id) {
+        wd.findElement(By.xpath(".//input[@value='" + id + "']")).click();
     }
 
-    public void selectGroupByIndex(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
-    }
-
-    public List<GroupData> list(){
-        List<GroupData> groups = new ArrayList<>();
+    public Set<GroupData> all(){
+        Set<GroupData> groups = new HashSet<>();
         List<WebElement> elements = wd.findElements(By.xpath(".//span[@class='group']"));
         for (WebElement e: elements){
             int id = Integer.parseInt(e.findElement(By.tagName("input")).getAttribute("value"));
@@ -67,20 +63,15 @@ public class GroupsHelper extends BaseHelper {
         submitGroupCreation();
     }
 
-    public void modify(int index, GroupData group) {
-        selectGroupByIndex(index);
+    public void modify(GroupData group) {
+        selectGroupById(group.getId());
         initGroupEditing();
         setGroupData(group);
         submitGroupEdition();
     }
 
-    public void deleteByIndex(int index) {
-        selectGroupByIndex(index);
-        submitGroupDeletion();
-    }
-
-    public void deleteByName(String name) {
-        selectGroupByName(name);
+    public void delete(GroupData group) {
+        selectGroupById(group.getId());
         submitGroupDeletion();
     }
 

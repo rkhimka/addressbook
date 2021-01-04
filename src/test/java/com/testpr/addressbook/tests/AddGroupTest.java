@@ -4,8 +4,7 @@ import com.testpr.addressbook.models.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class AddGroupTest extends TestBase {
 
@@ -13,16 +12,13 @@ public class AddGroupTest extends TestBase {
     public void testAddGroup() {
         GroupData group = new GroupData().withName("group 1").withHeader("header").withComment("comment...");
         app.navigate().groupsPage();
-        List<GroupData> before = app.groups().list();
+        Set<GroupData> before = app.groups().all();
         app.groups().create(group);
         app.navigate().groupsPage();
-        List<GroupData> after = app.groups().list();
+        Set<GroupData> after = app.groups().all();
         Assert.assertEquals(after.size(), before.size() + 1);
+        group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
         before.add(group);
-        //sort two lists with groups
-        Comparator<? super GroupData> byID = (o1, o2) -> Integer.compare(o1.getId(), o2.getId());
-        before.sort(byID);
-        after.sort(byID);
         Assert.assertEquals(before, after);
     }
 }
