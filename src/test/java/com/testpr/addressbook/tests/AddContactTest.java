@@ -10,7 +10,7 @@ public class AddContactTest extends TestBase {
     public void testAddContact() {
         app.navigate().groupsPage();
         if (! app.groups().isTestGroupCreated("test group")) {
-            app.groups().create(new GroupData("test group", "test header", "test comment"));
+            app.groups().create(new GroupData().withName("group 1").withHeader("header").withComment("comment..."));
         }
         app.navigate().homePage();
         app.contacts().createContact(new ContactData("Roma", "Test", "38099-111-22-33",

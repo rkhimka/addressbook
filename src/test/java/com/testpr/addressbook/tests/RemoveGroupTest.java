@@ -13,8 +13,7 @@ public class RemoveGroupTest extends TestBase {
     public void ensurePreconditions(){
         app.navigate().groupsPage();
         if (app.groups().list().size() == 0) {
-            app.groups().create(new GroupData("group 1",
-                    "header", "test comment..."));
+            app.groups().create(new GroupData().withName("group 1").withHeader("header").withComment("comment..."));
         }
     }
 

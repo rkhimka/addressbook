@@ -11,7 +11,7 @@ public class AddGroupTest extends TestBase {
 
     @Test
     public void testAddGroup() {
-        GroupData group = new GroupData("group 1", "header", "comment...");
+        GroupData group = new GroupData().withName("group 1").withHeader("header").withComment("comment...");
         app.navigate().groupsPage();
         List<GroupData> before = app.groups().list();
         app.groups().create(group);

@@ -4,30 +4,32 @@ import java.util.Objects;
 
 public class GroupData {
     private int id;
-    private final String groupName;
-    private final String headerName;
-    private final String comment;
+    private String groupName;
+    private String headerName;
+    private String comment;
 
-    public GroupData(String groupName, String headerName, String comment) {
-        this.id = Integer.MAX_VALUE;
-        this.groupName = groupName;
-        this.headerName = headerName;
-        this.comment = comment;
+    public GroupData withId(int id) {
+        this.id = id;
+        return this;
     }
 
-    public GroupData(int id, String groupName, String headerName, String comment) {
-        this.id = id;
+    public GroupData withName(String groupName) {
         this.groupName = groupName;
+        return this;
+    }
+
+    public GroupData withHeader(String headerName) {
         this.headerName = headerName;
+        return this;
+    }
+
+    public GroupData withComment(String comment) {
         this.comment = comment;
+        return this;
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getGroupName() {

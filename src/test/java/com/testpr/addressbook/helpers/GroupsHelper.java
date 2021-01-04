@@ -28,7 +28,7 @@ public class GroupsHelper extends BaseHelper {
         List<WebElement> elements = wd.findElements(By.xpath(".//span[@class='group']"));
         for (WebElement e: elements){
             int id = Integer.parseInt(e.findElement(By.tagName("input")).getAttribute("value"));
-            GroupData groupdata = new GroupData(id, e.getText(), null, null);
+            GroupData groupdata = new GroupData().withId(id).withName(e.getText());
             groups.add(groupdata);
         }
         return groups;
