@@ -2,33 +2,35 @@ package com.testpr.addressbook.tests;
 
 import com.testpr.addressbook.models.GroupData;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class EditGroupTest extends TestBase {
 
+    @BeforeMethod
+    public void ensurePreconditions(){
+        app.navigate().groupsPage();
+        if (app.groups().list().size() == 0) {
+            app.groups().create(new GroupData("group 1",
+                    "header", "test comment..."));
+        }
+    }
+
     @Test
     public void testEditGroup() {
-        app.getNavigation().followGroups();
-        if (! app.getGroupsHelper().isAnyGroupCreated()) {
-            app.getGroupsHelper().createGroup(new GroupData("test group",
-                    "test header", "test comment"));
-        }
-        app.getNavigation().followGroups();
-        List<GroupData> before = app.getGroupsHelper().getGroupsList();
-        app.getGroupsHelper().selectGroupByIndex(1);
-        app.getGroupsHelper().initGroupEditing();
-        GroupData group = new GroupData(before.get(0).getId(), "new group name",
-                "new header", "new comment message");
-        app.getGroupsHelper().setGroupData(group);
-        app.getGroupsHelper().submitGroupEdition();
-        app.getNavigation().followGroups();
-        List<GroupData> after = app.getGroupsHelper().getGroupsList();
+        app.navigate().groupsPage();
+        List<GroupData> before = app.groups().list();
+        int index = before.size() - 1;
+        GroupData group = new GroupData(before.get(0).getId(), "modified name",
+                "modified header", "new comment...");
+        app.groups().modify(index, group);
+        app.navigate().groupsPage();
+        List<GroupData> after = app.groups().list();
         Assert.assertEquals(after.size(), before.size());
-        before.remove(0);
+        before.remove(index);
         before.add(group);
         //sort two lists with groups
         Comparator<? super GroupData> byID = (o1, o2) -> Integer.compare(o1.getId(), o2.getId());

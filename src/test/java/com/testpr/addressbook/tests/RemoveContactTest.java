@@ -5,16 +5,16 @@ import org.testng.annotations.Test;
 
 public class RemoveContactTest extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testRemoveContact() {
-        app.getNavigation().followHome();
-        if (! app.getContactsHelper().isContactCreated("Roma", "Test")) {
-            app.getContactsHelper().createContact(new ContactData("Roma", "Test", "38099-111-22-33",
+        app.navigate().homePage();
+        if (! app.contacts().isContactCreated("Roma", "Test")) {
+            app.contacts().createContact(new ContactData("Roma", "Test", "38099-111-22-33",
                     "test@mail.com", "Lviv city", "test group"), true);
         }
-        app.getNavigation().followHome();
-        app.getContactsHelper().selectContactByName("Roma", "Test");
-        app.getContactsHelper().submitContactDeletion();
-        app.getContactsHelper().submitDeletionAlert();
+        app.navigate().homePage();
+        app.contacts().selectContactByName("Roma", "Test");
+        app.contacts().submitContactDeletion();
+        app.contacts().submitDeletionAlert();
     }
 }

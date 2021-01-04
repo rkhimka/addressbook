@@ -14,21 +14,16 @@ public class GroupsHelper extends BaseHelper {
         super(wd);
     }
 
-    public int getGroupsCount() {
-        return wd.findElements(By.name("selected[]")).size();
-    }
-
     public void selectGroupByName(String groupName) {
         String locator = String.format(".//input[@title='Select (%s)']", groupName);
         click(By.xpath(locator));
     }
 
-
     public void selectGroupByIndex(int index) {
-        wd.findElements(By.name("selected[]")).get(index - 1).click();
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
-    public List<GroupData> getGroupsList(){
+    public List<GroupData> list(){
         List<GroupData> groups = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.xpath(".//span[@class='group']"));
         for (WebElement e: elements){
@@ -39,53 +34,59 @@ public class GroupsHelper extends BaseHelper {
         return groups;
     }
 
-    public void setGroupData(GroupData groupData) {
-        type(By.xpath(".//input[@name='group_name']"), groupData.getGroupName());
-        type(By.xpath(".//textarea[@name='group_header']"), groupData.getHeaderName());
-        type(By.xpath(".//textarea[@name='group_footer']"), groupData.getComment());
-    }
-
-    //CREATE GROUP METHODS
-    public void submitGroupCreation() {
-        click(By.xpath(".//input[@value='Enter information']"));
-    }
-
     public void initGroupCreation() {
         click(By.xpath(".//input[@value='New group'][1]"));
-    }
-
-    public void createGroup(GroupData groupData) {
-        initGroupCreation();
-        setGroupData(groupData);
-        submitGroupCreation();
-    }
-
-    // DELETE GROUP METHODS
-    public void submitGroupDeletion() {
-        click(By.xpath(".//input[@value='Delete group(s)'][1]"));
-    }
-
-    public void deleteGroup(String groupName) {
-        selectGroupByName(groupName);
-        submitGroupDeletion();
-    }
-
-    //EDITING GROUP METHODS
-    public void submitGroupEdition() {
-        click(By.xpath(".//input[@value='Update']"));
     }
 
     public void initGroupEditing() {
         click(By.xpath(".//input[@value='Edit group'][1]"));
     }
 
+    public void setGroupData(GroupData groupData) {
+        type(By.xpath(".//input[@name='group_name']"), groupData.getGroupName());
+        type(By.xpath(".//textarea[@name='group_header']"), groupData.getHeaderName());
+        type(By.xpath(".//textarea[@name='group_footer']"), groupData.getComment());
+    }
+
+    public void submitGroupCreation() {
+        click(By.xpath(".//input[@value='Enter information']"));
+    }
+
+    public void submitGroupEdition() {
+        click(By.xpath(".//input[@value='Update']"));
+    }
+
+    public void submitGroupDeletion() {
+        click(By.xpath(".//input[@value='Delete group(s)'][1]"));
+    }
+
+    //CRUD METHODS
+    public void create(GroupData groupData) {
+        initGroupCreation();
+        setGroupData(groupData);
+        submitGroupCreation();
+    }
+
+    public void modify(int index, GroupData group) {
+        selectGroupByIndex(index);
+        initGroupEditing();
+        setGroupData(group);
+        submitGroupEdition();
+    }
+
+    public void deleteByIndex(int index) {
+        selectGroupByIndex(index);
+        submitGroupDeletion();
+    }
+
+    public void deleteByName(String name) {
+        selectGroupByName(name);
+        submitGroupDeletion();
+    }
+
     //CHECK METHODS
     public boolean isTestGroupCreated(String groupName) {
         String locator = String.format(".//input[@title='Select (%s)']", groupName);
         return isElementPresent(By.xpath(locator));
-    }
-
-    public boolean isAnyGroupCreated() {
-        return isElementPresent(By.name("selected[]"));
     }
 }

@@ -2,19 +2,19 @@ package com.testpr.addressbook.tests;
 
 import com.testpr.addressbook.helpers.ApplicationHelper;
 import org.openqa.selenium.remote.BrowserType;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 
 public class TestBase {
 
-    protected final ApplicationHelper app = new ApplicationHelper(BrowserType.CHROME);
+    protected static final ApplicationHelper app = new ApplicationHelper(BrowserType.CHROME);
 
-    @BeforeMethod
+    @BeforeSuite
     public void setUp() {
         app.init();
     }
 
-    @AfterMethod
+    @AfterSuite
     public void tearDown() {
         app.destroy();
     }

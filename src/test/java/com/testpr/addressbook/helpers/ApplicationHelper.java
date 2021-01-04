@@ -19,15 +19,15 @@ public class ApplicationHelper {
         this.browser = browser;
     }
 
-    public ContactsHelper getContactsHelper() {
+    public ContactsHelper contacts() {
         return contactsHelper;
     }
 
-    public NavigationHelper getNavigation() {
+    public NavigationHelper navigate() {
         return navigation;
     }
 
-    public GroupsHelper getGroupsHelper() {
+    public GroupsHelper groups() {
         return groupsHelper;
     }
 
