@@ -1,20 +1,41 @@
 package com.testpr.addressbook.models;
 
-public class ContactData {
-    private final String firstName;
-    private final String lastName;
-    private final String mobile;
-    private final String email;
-    private final String address;
-    private final String group;
+import java.util.Objects;
 
-    public ContactData(String firstName, String lasrName, String mobile, String email, String address, String group) {
+public class ContactData {
+    private int id = Integer.MAX_VALUE;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String group;
+
+    public ContactData withId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public ContactData withFname(String firstName) {
         this.firstName = firstName;
-        this.lastName = lasrName;
-        this.mobile = mobile;
+        return this;
+    }
+
+    public ContactData withLname(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public ContactData withEmail(String email) {
         this.email = email;
-        this.address = address;
+        return this;
+    }
+
+    public ContactData withGroup(String group) {
         this.group = group;
+        return this;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -25,19 +46,33 @@ public class ContactData {
         return lastName;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
     public String getGroup() {
         return group;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactData that = (ContactData) o;
+        return id == that.id &&
+                Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email);
     }
 }
