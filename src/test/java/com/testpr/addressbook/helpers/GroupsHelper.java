@@ -6,11 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GroupsHelper extends BaseHelper {
+    private Groups cache = null;
 
     public GroupsHelper(WebDriver wd) {
         super(wd);
@@ -21,14 +20,17 @@ public class GroupsHelper extends BaseHelper {
     }
 
     public Groups all(){
-        Groups groups = new Groups();
+        if (cache != null){
+            return new Groups(cache);
+        }
+        cache = new Groups();
         List<WebElement> elements = wd.findElements(By.xpath(".//span[@class='group']"));
         for (WebElement e: elements){
             int id = Integer.parseInt(e.findElement(By.tagName("input")).getAttribute("value"));
             GroupData groupdata = new GroupData().withId(id).withName(e.getText());
-            groups.add(groupdata);
+            cache.add(groupdata);
         }
-        return groups;
+        return cache;
     }
 
     public void initGroupCreation() {
@@ -66,6 +68,7 @@ public class GroupsHelper extends BaseHelper {
         initGroupCreation();
         setGroupData(groupData);
         submitGroupCreation();
+        cache = null;
         returnToGroupsPage();
     }
 
@@ -74,12 +77,14 @@ public class GroupsHelper extends BaseHelper {
         initGroupEditing();
         setGroupData(group);
         submitGroupEdition();
+        cache = null;
         returnToGroupsPage();
     }
 
     public void delete(GroupData group) {
         selectGroupById(group.getId());
         submitGroupDeletion();
+        cache = null;
         returnToGroupsPage();
     }
 
