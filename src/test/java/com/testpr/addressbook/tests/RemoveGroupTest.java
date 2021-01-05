@@ -1,16 +1,17 @@
 package com.testpr.addressbook.tests;
 
 import com.testpr.addressbook.models.GroupData;
-import org.testng.Assert;
+import com.testpr.addressbook.models.Groups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class RemoveGroupTest extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions(){
+    public void ensurePreconditions() {
         app.navigate().groupsPage();
         if (app.groups().all().size() == 0) {
             app.groups().create(new GroupData().withName("group 1").withHeader("header").withComment("comment..."));
@@ -20,13 +21,11 @@ public class RemoveGroupTest extends TestBase {
     @Test
     public void testDeleteGroup() {
         app.navigate().groupsPage();
-        Set<GroupData> before = app.groups().all();
+        Groups before = app.groups().all();
         GroupData groupToDelete = before.iterator().next();
         app.groups().delete(groupToDelete);
-        app.navigate().groupsPage();
-        Set<GroupData> after = app.groups().all();
-        Assert.assertEquals(after.size(), before.size() - 1);
-        before.remove(groupToDelete);
-        Assert.assertEquals(before, after);
+        Groups after = app.groups().all();
+        assertThat(after.size(), equalTo(before.size() - 1));
+        assertThat(after, equalTo(before.withDeleted(groupToDelete)));
     }
 }

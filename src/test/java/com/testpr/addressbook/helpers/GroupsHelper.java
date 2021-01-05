@@ -1,6 +1,7 @@
 package com.testpr.addressbook.helpers;
 
 import com.testpr.addressbook.models.GroupData;
+import com.testpr.addressbook.models.Groups;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,8 +20,8 @@ public class GroupsHelper extends BaseHelper {
         wd.findElement(By.xpath(".//input[@value='" + id + "']")).click();
     }
 
-    public Set<GroupData> all(){
-        Set<GroupData> groups = new HashSet<>();
+    public Groups all(){
+        Groups groups = new Groups();
         List<WebElement> elements = wd.findElements(By.xpath(".//span[@class='group']"));
         for (WebElement e: elements){
             int id = Integer.parseInt(e.findElement(By.tagName("input")).getAttribute("value"));
@@ -56,11 +57,16 @@ public class GroupsHelper extends BaseHelper {
         click(By.xpath(".//input[@value='Delete group(s)'][1]"));
     }
 
+    public void returnToGroupsPage() {
+        click(By.xpath(".//a[text()='groups']"));
+    }
+
     //CRUD METHODS
     public void create(GroupData groupData) {
         initGroupCreation();
         setGroupData(groupData);
         submitGroupCreation();
+        returnToGroupsPage();
     }
 
     public void modify(GroupData group) {
@@ -68,11 +74,13 @@ public class GroupsHelper extends BaseHelper {
         initGroupEditing();
         setGroupData(group);
         submitGroupEdition();
+        returnToGroupsPage();
     }
 
     public void delete(GroupData group) {
         selectGroupById(group.getId());
         submitGroupDeletion();
+        returnToGroupsPage();
     }
 
     //CHECK METHODS
