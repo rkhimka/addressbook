@@ -19,6 +19,10 @@ public class GroupsHelper extends BaseHelper {
         wd.findElement(By.xpath(".//input[@value='" + id + "']")).click();
     }
 
+    public int count() {
+        return wd.findElements(By.xpath("//input[@name='selected[]']")).size();
+    }
+
     public Groups all(){
         if (cache != null){
             return new Groups(cache);
