@@ -20,7 +20,8 @@ public class EditContactTest extends TestBase {
         app.navigate().homePage();
         if (app.contacts().all().size() == 0) {
             app.contacts().create(new ContactData()
-                    .withFname("Test").withLname("User").withEmail("test@mail.com").withGroup("group 1"), true);
+                    .withFname("Test").withLname("User").withHomePhone("11111").withMobilePhone("22222")
+                    .withWorkPhone("33333").withEmail("test@mail.com").withGroup("group 1"), true);
         }
     }
 

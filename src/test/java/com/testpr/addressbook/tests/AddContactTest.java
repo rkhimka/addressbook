@@ -22,7 +22,8 @@ public class AddContactTest extends TestBase {
     @Test(enabled = false)
     public void testAddContact() {
         ContactData contact = new ContactData()
-                .withFname("Test").withLname("User").withEmail("test@mail.com").withGroup("group 1");
+                .withFname("Test").withLname("User").withMobilePhone("22 2")
+                .withWorkPhone("+3(12)").withEmail("test@mail.com").withGroup("group 1");
         app.navigate().homePage();
         Contacts before = app.contacts().all();
         app.contacts().create(contact, true);

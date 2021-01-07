@@ -27,6 +27,9 @@ public class ContactsHelper extends BaseHelper {
     public void setContactData(ContactData contact, boolean isCreation) {
         type(By.name("firstname"), contact.getFirstName());
         type(By.name("lastname"), contact.getLastName());
+        type(By.name("home"), contact.getHomePhone());
+        type(By.name("mobile"), contact.getMobilePhone());
+        type(By.name("work"), contact.getWorkPhone());
         type(By.name("email"), contact.getEmail());
         //verification of 'groups' drop-down visibility while creating/editing contact
         if (isCreation) {
@@ -38,6 +41,22 @@ public class ContactsHelper extends BaseHelper {
 
     public void initContactEditing() {
         click(By.xpath(".//img[@title='Edit']"));
+    }
+
+    public void initContactEditingById(int id) {
+        wd.findElement(By.xpath("//input[@id='" + id + "']/ancestor::tr/td[8]")).click();
+    }
+
+    public ContactData editFormInfo(ContactData contact) {
+        initContactEditingById(contact.getId());
+        String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastName = wd.findElement(By.name("firstname")).getAttribute("value");
+        String homePhone = wd.findElement(By.name("home")).getAttribute("value");
+        String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
+        String workPhone = wd.findElement(By.name("work")).getAttribute("value");
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withFname(firstName).withLname(lastName)
+                .withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone);
     }
 
     public void submitContactEditing() {
@@ -69,7 +88,11 @@ public class ContactsHelper extends BaseHelper {
                     id + "']/ancestor::tr/td[3]")).getText();
             String lName = wd.findElement(By.xpath("//tr[@name='entry']//input[@id='" +
                     id + "']/ancestor::tr/td[2]")).getText();
-            ContactData contact = new ContactData().withId(id).withFname(fName).withLname(lName);
+            String allPhones = wd.findElement(By.xpath("//tr[@name='entry']//input[@id='" +
+                    id + "']/ancestor::tr/td[6]")).getText();
+//            String[] phones = allPhones.split("\n");
+            ContactData contact = new ContactData().withId(id).withFname(fName)
+                    .withLname(lName).withAllPhones(allPhones);
             contacts.add(contact);
         }
         return contacts;
