@@ -1,9 +1,12 @@
 package com.testpr.addressbook.models;
 
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
+@ToString(of = {"id", "firstName", "lastName"})
+@EqualsAndHashCode(of = {"id", "firstName", "lastName"})
 public class ContactData {
-    private int id = Integer.MAX_VALUE;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
@@ -52,27 +55,5 @@ public class ContactData {
 
     public String getGroup() {
         return group;
-    }
-
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactData that = (ContactData) o;
-        return id == that.id &&
-                Objects.equals(email, that.email);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, email);
     }
 }

@@ -1,19 +1,20 @@
 package com.testpr.addressbook.tests;
 
 import com.testpr.addressbook.models.ContactData;
+import com.testpr.addressbook.models.Contacts;
 import com.testpr.addressbook.models.GroupData;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class EditContactTest extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
         app.navigate().groupsPage();
-        if (! app.groups().isTestGroupCreated("group 1")) {
+        if (!app.groups().isTestGroupCreated("group 1")) {
             app.groups().create(new GroupData().withName("group 1").withHeader("header").withComment("comment..."));
         }
         app.navigate().homePage();
@@ -26,16 +27,14 @@ public class EditContactTest extends TestBase {
     @Test(enabled = false)
     public void testEditContact() {
         app.navigate().homePage();
-        Set<ContactData> before = app.contacts().all();
+        Contacts before = app.contacts().all();
         ContactData contactToModify = before.iterator().next();
         ContactData contact = new ContactData().withId(contactToModify.getId())
-                .withFname("Modified").withLname("Name").withEmail("new@mail.com").withGroup("group 1");
+                .withFname("Modified").withLname("Name").withEmail("new@mail.com");
         app.contacts().modify(contact, false);
-        app.navigate().homePage();
-        Set<ContactData> after = app.contacts().all();
-        Assert.assertEquals(after.size(), before.size());
+        Contacts after = app.contacts().all();
+        assertThat(after.size(), equalTo(before.size()));
         before.remove(contactToModify);
-        before.add(contact);
-        Assert.assertEquals(before, after);
+        assertThat(after, equalTo(before.withModified(contactToModify, contact)));
     }
 }

@@ -1,7 +1,10 @@
 package com.testpr.addressbook.models;
 
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
+@ToString(of = {"id", "groupName"})
+@EqualsAndHashCode(of = {"id", "groupName"})
 public class GroupData {
     private int id = Integer.MAX_VALUE;
     private String groupName;
@@ -44,25 +47,4 @@ public class GroupData {
         return comment;
     }
 
-    @Override
-    public String toString() {
-        return "GroupData{" +
-                "id='" + id + '\'' +
-                ", groupName='" + groupName + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GroupData groupData = (GroupData) o;
-        return id == groupData.id &&
-                Objects.equals(groupName, groupData.groupName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, groupName);
-    }
 }

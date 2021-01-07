@@ -1,15 +1,14 @@
 package com.testpr.addressbook.helpers;
 
 import com.testpr.addressbook.models.ContactData;
+import com.testpr.addressbook.models.Contacts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactsHelper extends BaseHelper {
 
@@ -29,7 +28,7 @@ public class ContactsHelper extends BaseHelper {
         type(By.name("firstname"), contact.getFirstName());
         type(By.name("lastname"), contact.getLastName());
         type(By.name("email"), contact.getEmail());
-        //verification of 'groups' drop-down visibility on create/edit contact process
+        //verification of 'groups' drop-down visibility while creating/editing contact
         if (isCreation) {
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contact.getGroup());
         } else {
@@ -57,13 +56,20 @@ public class ContactsHelper extends BaseHelper {
         acceptAlert();
     }
 
-    public Set<ContactData> all() {
-        Set<ContactData> contacts = new HashSet<>();
+    public void returnToGroupsPage() {
+        click(By.xpath(".//a[text()='home']"));
+    }
+
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         List<WebElement> elements = wd.findElements(By.xpath(".//tr[@name='entry']"));
         for (WebElement e : elements) {
             int id = Integer.parseInt(e.findElement(By.tagName("input")).getAttribute("id"));
-            String email = e.findElement(By.tagName("input")).getAttribute("accept");
-            ContactData contact = new ContactData().withId(id).withEmail(email);
+            String fName = wd.findElement(By.xpath("//tr[@name='entry']//input[@id='" +
+                    id + "']/ancestor::tr/td[3]")).getText();
+            String lName = wd.findElement(By.xpath("//tr[@name='entry']//input[@id='" +
+                    id + "']/ancestor::tr/td[2]")).getText();
+            ContactData contact = new ContactData().withId(id).withFname(fName).withLname(lName);
             contacts.add(contact);
         }
         return contacts;
@@ -73,6 +79,7 @@ public class ContactsHelper extends BaseHelper {
         followContactCreation();
         setContactData(contactData, isCreation);
         submitContactCreation();
+        returnToGroupsPage();
     }
 
     public void modify(ContactData contact, boolean isCreation) {
@@ -80,12 +87,14 @@ public class ContactsHelper extends BaseHelper {
         initContactEditing();
         setContactData(contact, isCreation);
         submitContactEditing();
+        returnToGroupsPage();
     }
 
     public void delete(ContactData contact) {
         selectContactById(contact.getId());
         submitContactDeletion();
         submitDeletionAlert();
+        returnToGroupsPage();
     }
 
     public boolean isContactCreated(String firstName, String lastName) {
